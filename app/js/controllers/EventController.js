@@ -1,37 +1,16 @@
 'use strict';
 
-eventsApp.controller('EventController', function EventController($scope) {
+eventsApp.controller('EventController', function EventController($scope, eventData, $log, $anchorScroll, $routeParams, $route) {
     $scope.snippet = '<span style="color:red">Hey there</span>';
     $scope.disabled = false;
-    $scope.event = {
-        name: 'Angular Boot Camp',
-        date: '1/1/2013',
-        time: '10:30 am',
-        location: {
-            address: 'Google Headquarters',
-            city: 'Mountain View',
-            province: 'CA'
-        },
-        imageUrl: '/img/angularjs-logo.png',
-        sessions: [
-            {
-                name: 'Directives Masterclass',
-                creatorName: 'Bob Smith',
-                duration: '1 hr',
-                level: 'Advanced',
-                abstract: 'In this session u will learn ins and outs of directives',
-                upVoteCount: 0
-            },
-            {
-                name: 'Scopes for fun',
-                creatorName: 'John Doe',
-                duration: '30 mins',
-                level: 'Introductory',
-                abstract: 'In this session you will have a closer look at Angular scopes',
-                upVoteCount: 0
-            }
-        ]
-    }
+
+    $scope.event = $route.current.locals.event; 
+    //eventData.getEvent($routeParams.eventId);
+    
+    // .$promise
+    // .then(function (event) { $scope.event = event; console.log(event); })
+    // .catch(function (response) { console.log(response) }
+    // );
 
     $scope.upVoteSession = function (session) {
         session.upVoteCount++;
@@ -40,5 +19,8 @@ eventsApp.controller('EventController', function EventController($scope) {
         if (session.upVoteCount == 0)
             return;
         session.upVoteCount--;
+    }
+    $scope.scrollToSession = function () {
+        $anchorScroll();
     }
 })

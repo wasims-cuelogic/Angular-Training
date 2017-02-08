@@ -1,9 +1,16 @@
 'use strict';
 
-eventsApp.controller('EventController', function EventController($scope, eventData) {
+eventsApp.controller('EventController', function EventController($scope, eventData, $log, $anchorScroll, $routeParams, $route) {
     $scope.snippet = '<span style="color:red">Hey there</span>';
     $scope.disabled = false;
-    $scope.event = eventData.event;
+
+    $scope.event = $route.current.locals.event; 
+    //eventData.getEvent($routeParams.eventId);
+    
+    // .$promise
+    // .then(function (event) { $scope.event = event; console.log(event); })
+    // .catch(function (response) { console.log(response) }
+    // );
 
     $scope.upVoteSession = function (session) {
         session.upVoteCount++;
@@ -12,5 +19,8 @@ eventsApp.controller('EventController', function EventController($scope, eventDa
         if (session.upVoteCount == 0)
             return;
         session.upVoteCount--;
+    }
+    $scope.scrollToSession = function () {
+        $anchorScroll();
     }
 })
